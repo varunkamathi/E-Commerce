@@ -65,7 +65,7 @@ const ProductList = () => {
 
   return (
     <div className="relative">
-      <Navbar cartItemCount={cart.reduce((acc, item) => acc + item.quantity, 0)} openCart={() => setIsCartOpen(true)} />
+          <Navbar cartItemCount={cart.reduce((acc, item) => acc + item.quantity, 0)} openCart={() => setIsCartOpen(true)} />
       <div className="max-w-7xl mx-auto px-4 py-6">
         <h1 className="text-4xl font-semibold text-center text-amber-50 mb-10">Product Page</h1>
 

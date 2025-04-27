@@ -1,14 +1,21 @@
-import React from "react";
-import ProductList from "./components/ProductList";
-import Cart from "./components/Cart";
-import CartSummary from "./components/CartSummary";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ProductList from './components/ProductList';
+import MyOrder from './components/MyOrder';
+import Auth from './pages/Auth';
+import Account from './components/Account';
 
-function App() {
+const App = () => {
   return (
-   <div className="bg-gray-900">
-    <ProductList/>
-   </div>
+    <Router>
+      <Routes>
+      <Route path="/" element={<Auth/>} />
+        <Route path="/home" element={<ProductList />} />
+        <Route path="/my-account" element={<Account/>} />
+        <Route path="/my-order" element={<MyOrder />} />  
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
