@@ -68,13 +68,13 @@ const Auth = () => {
           <div className="flex flex-col w-full space-y-4">
             <button
               onClick={handleSignIn}
-              className="w-full px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition duration-300"
+              className="w-full px-4 py-2 font-semibold bg-teal-500 text-white rounded-full hover:bg-white hover:border-2 hover:border-teal-500 hover:text-black transition duration-300"
             >
               SIGN IN
             </button>
             <button
               onClick={handleSignUp}
-              className="w-full px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-300"
+              className="w-full px-4 py-2 font-semibold bg-teal-500 text-white rounded-full hover:bg-white hover:border-2 hover:border-teal-500 hover:text-black "
             >
               SIGN UP
             </button>
