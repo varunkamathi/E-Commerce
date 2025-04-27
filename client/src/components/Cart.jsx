@@ -1,9 +1,9 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
+import { useNavigate } from "react-router-dom"; 
 
 const Cart = ({ isCartOpen, closeCart, cart, increaseQty, decreaseQty, removeFromCart, placeOrder }) => {
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const navigate = useNavigate(); // Initialize the navigation hook
+  const navigate = useNavigate(); 
 
   const handleBuy = () => {
     if (cart.length === 0) {
@@ -16,17 +16,13 @@ const Cart = ({ isCartOpen, closeCart, cart, increaseQty, decreaseQty, removeFro
       date: new Date().toLocaleString(),
     };
   
-    // Get existing orders from localStorage
     const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
   
-    // Add new order
     const updatedOrders = [...existingOrders, newOrder];
   
-    // Save back to localStorage
     localStorage.setItem("orders", JSON.stringify(updatedOrders));
   
-    // Clear the cart (you might want to pass clearCart function as prop, or you can just reload the page)
-    // For now you can just navigate
+   
     navigate("/my-order");
   };
   return (
@@ -81,14 +77,14 @@ const Cart = ({ isCartOpen, closeCart, cart, increaseQty, decreaseQty, removeFro
         )}
       </div>
 
-      {/* Footer */}
+      
       <div className="p-4 border-t">
         <div className="flex justify-between mb-4">
           <span className="font-semibold">Total:</span>
           <span className="font-bold">${totalPrice.toFixed(2)}</span>
         </div>
         <button
-          onClick={handleBuy} // Trigger the handleBuy function when clicked
+          onClick={handleBuy} 
           className="w-full py-2 bg-yellow-400 text-black rounded-2xl font-semibold hover:bg-amber-200"
         >
           Buy

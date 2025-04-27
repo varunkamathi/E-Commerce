@@ -1,48 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { useClerk } from "@clerk/clerk-react"; // IMPORT THIS at the top with other imports
+import { useClerk } from "@clerk/clerk-react"; 
 import { useNavigate } from "react-router-dom";
 
-
 const Account = ({ logout, orders = [] }) => {
-  const [user, setUser] = useState(null); // Initial state set to null
-  const [loading, setLoading] = useState(true); // Loading state
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { signOut } = useClerk();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      // Clear your own localStorage user data
       localStorage.removeItem("user");
-  
-      // Clerk sign out
       await signOut();
-  
-      // Navigate to home page
       navigate("/");
-      
       console.log("User signed out and navigated to home.");
     } catch (error) {
       console.error("Error during logout:", error);
     }
   };
+
   useEffect(() => {
-    // Get the user data from localStorage
     const storedUserString = localStorage.getItem("user");
 
     if (storedUserString) {
       try {
         const storedUser = JSON.parse(storedUserString);
         console.log("Stored User:", storedUser);
-        setUser(storedUser); // Set parsed user in state
+        setUser(storedUser);
       } catch (error) {
         console.error("Error parsing user from localStorage:", error);
-        setUser(null); // In case of error, treat as no user
+        setUser(null);
       }
     } else {
       console.log("No user found in localStorage.");
     }
 
-    setLoading(false); // Done loading
+    setLoading(false);
   }, []);
 
   if (loading) {
@@ -61,11 +54,9 @@ const Account = ({ logout, orders = [] }) => {
     );
   }
 
-  // Access external account data safely
   const externalAccounts = user.externalAccounts || [];
   const googleAccount = externalAccounts.length > 0 ? externalAccounts[0] : null;
 
-  // Create full name and other user details
   const fullName = googleAccount ? `${googleAccount.firstName} ${googleAccount.lastName}` : "Unknown User";
   const email = googleAccount ? googleAccount.emailAddress : "No email found";
   const imageUrl = googleAccount ? googleAccount.imageUrl : "default-image-url";
@@ -73,8 +64,14 @@ const Account = ({ logout, orders = [] }) => {
   console.log("User Name:", fullName);
 
   return (
-    <div className="max-w-2xl mx-auto py-10 px-4">
-      {/* User Info */}
+    <div className="max-w-2xl mx-auto py-10 px-4 relative">
+      <button
+        onClick={() => navigate("/home")}
+        className="absolute top-6 left-6 text-teal-500 hover:text-teal-800 font-bold"
+      >
+        &larr; Back to Home
+      </button>
+
       <div className="flex flex-col items-center mb-10">
         <img
           src={imageUrl}
@@ -85,18 +82,14 @@ const Account = ({ logout, orders = [] }) => {
         <p className="text-gray-600 mt-2">{email}</p>
       </div>
 
-      {/* My Orders */}
-      
-
-        {/* Logout Button */}
-        <div className="flex justify-center">
-  <button
-    onClick={handleLogout}
-    className="px-6 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 font-semibold"
-  >
-    Logout
-  </button>
-</div>
+      <div className="flex justify-center">
+        <button
+          onClick={handleLogout}
+          className="px-6 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 font-semibold"
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 };

@@ -58,12 +58,10 @@ const Auth = () => {
         {/* Right Side */}
         <div className="w-1/2 bg-white p-10 flex flex-col items-center justify-center">
           <h2 className="text-3xl font-bold text-teal-500 mb-10">Get Started With Us</h2>
-           {/* Social Icons */}
          <div className="flex justify-center space-x-4 mb-6">
             
               <img src={greting} alt="hello" className="w-25 h-20" />
             
-            {/* You can add Facebook / LinkedIn buttons too if needed */}
           </div>
           <div className="flex flex-col w-full space-y-4">
             <button
