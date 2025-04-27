@@ -33,12 +33,7 @@ const Auth = () => {
     openSignIn({ afterSignInUrl: "/home" });
   };
 
-  const handleGoogleSignIn = () => {
-    openSignIn({
-      strategy: "oauth_google",
-      afterSignInUrl: "/home",
-    });
-  };
+
 
   if (!isLoaded) {
     return <div>Loading...</div>;
@@ -50,12 +45,11 @@ const Auth = () => {
         {/* Left Side */}
         <div className="w-1/2 bg-teal-500 text-white flex flex-col items-center justify-center p-10">
           <h2 className="text-3xl font-bold mb-4">Welcome Back To Shopiy!</h2>
-          <p className="text-center mb-8">To keep connected with us please login with your personal info</p>
+          <p className="text-center mb-8">Empowering Your Lifestyle with Endless Choices, Unbeatable Value, and Fast, Reliable Delivery — All in One Place</p>
           
         </div>
         
 
-        {/* Right Side */}
         <div className="w-1/2 bg-white p-10 flex flex-col items-center justify-center">
           <h2 className="text-3xl font-bold text-teal-500 mb-10">Get Started With Us</h2>
          <div className="flex justify-center space-x-4 mb-6">
