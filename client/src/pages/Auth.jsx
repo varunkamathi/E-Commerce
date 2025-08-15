@@ -1,12 +1,16 @@
-import React, { useEffect } from "react";
+import React, {useContext, useEffect } from "react";
 import { useClerk, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import greting from "../assets/greting.png";
+import { UserContext } from "../Context";
+
 
 const Auth = () => {
   const { openSignUp, openSignIn } = useClerk();
   const { user, isLoaded } = useUser();
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
+
 
   useEffect(() => {
     if (isLoaded && user) {
@@ -21,17 +25,19 @@ const Auth = () => {
         ]
       };
       localStorage.setItem("user", JSON.stringify(userData));
+       setUser(userData); 
+      console.log("User data set in context and localStorage:", userData);
       navigate("/home");
     }
-  }, [isLoaded, user, navigate]);
+  }, [isLoaded, user, navigate, setUser]);
 
-  const handleSignUp = () => {
-    openSignUp({ afterSignUpUrl: "/home" });
-  };
+ const handleSignUp = () => {
+  openSignUp(); 
+};
 
-  const handleSignIn = () => {
-    openSignIn({ afterSignInUrl: "/home" });
-  };
+const handleSignIn = () => {
+  openSignIn(); 
+};
 
   if (!isLoaded) {
     return <div>Loading...</div>;

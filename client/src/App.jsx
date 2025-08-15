@@ -4,9 +4,12 @@ import ProductList from './pages/ProductList';
 import MyOrder from './components/MyOrder';
 import Auth from './pages/Auth';
 import Account from './components/Account';
+import { UserProvider } from './Context';
+
 
 const App = () => {
   return (
+    
     <Router>
       <Routes>
       <Route path="/" element={<Auth/>} />
@@ -15,6 +18,7 @@ const App = () => {
         <Route path="/my-order" element={<MyOrder />} />  
       </Routes>
     </Router>
+    
   );
 };
 

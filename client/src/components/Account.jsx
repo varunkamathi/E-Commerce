@@ -1,47 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { useClerk } from "@clerk/clerk-react"; 
+import React, { useContext, useState } from "react";
+import { useClerk } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Context"; // ✅ Import Context
 
-const Account = ({ logout, orders = [] }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+const Account = () => {
+  const { user, setUser } = useContext(UserContext); // ✅ Get user from context
+  const [loading, setLoading] = useState(false);
   const { signOut } = useClerk();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
+      setLoading(true);
       localStorage.removeItem("user");
+      setUser(null); // ✅ Clear user from context
       await signOut();
       navigate("/");
       console.log("User signed out and navigated to home.");
     } catch (error) {
       console.error("Error during logout:", error);
+    } finally {
+      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const storedUserString = localStorage.getItem("user");
-
-    if (storedUserString) {
-      try {
-        const storedUser = JSON.parse(storedUserString);
-        console.log("Stored User:", storedUser);
-        setUser(storedUser);
-      } catch (error) {
-        console.error("Error parsing user from localStorage:", error);
-        setUser(null);
-      }
-    } else {
-      console.log("No user found in localStorage.");
-    }
-
-    setLoading(false);
-  }, []);
 
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-64">
-        <h2 className="text-2xl font-bold text-gray-700 mb-4">Loading...</h2>
+        <h2 className="text-2xl font-bold text-gray-700 mb-4">Logging out...</h2>
       </div>
     );
   }
@@ -57,11 +43,11 @@ const Account = ({ logout, orders = [] }) => {
   const externalAccounts = user.externalAccounts || [];
   const googleAccount = externalAccounts.length > 0 ? externalAccounts[0] : null;
 
-  const fullName = googleAccount ? `${googleAccount.firstName} ${googleAccount.lastName}` : "Unknown User";
+  const fullName = googleAccount
+    ? `${googleAccount.firstName} ${googleAccount.lastName}`
+    : "Unknown User";
   const email = googleAccount ? googleAccount.emailAddress : "No email found";
   const imageUrl = googleAccount ? googleAccount.imageUrl : "default-image-url";
-
-  console.log("User Name:", fullName);
 
   return (
     <div className="max-w-2xl mx-auto py-10 px-4 relative">
